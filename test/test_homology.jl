@@ -95,13 +95,52 @@ end
     end
 
     @testset "Expected values" begin
+        # Tables 1, 3 and 4 of the article named in [source], with the errata (f1 of J1.f).
         expected = TOML.parsefile(EXPECTED_HOMOLOGY)
-        @test length(expected) == 26
-        for (group, entry) in expected
-            H = GG([parse(G, s) for s in entry["trivial"]])
-            @test H[0] == G(1)
-            # These braid groups have an infinite cyclic centre: Euler characteristic 0.
-            @test sum((-1)^n * rank(H[n]) for n in range(H)) == 0
+        @test expected["source"]["arxiv"] == "2302.10033v2"
+        @test expected["source"]["tables"] == [1, 3, 4]
+        groups = filter(!=("source"), collect(keys(expected)))
+        @test sort!(parse.(Int, chop.(groups; head = 1, tail = 0))) == 4:37
+        @test count(g -> expected[g]["well_generated"], groups) == 26
+        keys_known = Set(["well_generated", "real", "isodiscriminantal", "trivial", "sign",
+                          "cells_mar17", "cells_optimised", "two_cell_bounds", "errata"])
+        classes = Dict{String, Vector{String}}()
+        n_errata = 0
+        for group in groups
+            entry = expected[group]
+            @test issubset(keys(entry), keys_known)
+            # Written in the form displayed by FinitelyGeneratedAbelianGroup.
+            @test all(string(parse(G, s)) == s for s in [entry["trivial"]; entry["sign"]])
+            trivial = GG([parse(G, s) for s in entry["trivial"]])
+            sign = GG([parse(G, s) for s in entry["sign"]])
+            @test range(sign) == range(trivial)
+            @test trivial[0] == G(1)
+            @test sign[0] == G(0, [2])
+            # Braid groups of irreducible reflection groups: Euler characteristic 0, the
+            # alternating sum of the free ranks for any module of rank one.
+            @test sum((-1)^n * rank(trivial[n]) for n in range(trivial)) == 0
+            @test sum((-1)^n * rank(sign[n]) for n in range(sign)) == 0
+            for key in ("cells_mar17", "cells_optimised")
+                haskey(entry, key) || continue
+                cells = entry[key]
+                @test length(cells) == length(range(trivial))
+                @test sum((-1)^(n - 1) * cells[n] for n in eachindex(cells)) == 0
+            end
+            for erratum in get(entry, "errata", Dict{String, Any}[])
+                @test erratum["key"] in ("trivial", "sign", "cells_mar17", "cells_optimised")
+                @test string(entry[erratum["key"]][erratum["degree"] + 1]) != erratum["printed"]
+                @test erratum["listed"] isa Bool && !isempty(erratum["reason"])
+                n_errata += 1
+            end
+            haskey(entry, "isodiscriminantal") &&
+                push!(get!(classes, entry["isodiscriminantal"], String[]), group)
+        end
+        @test n_errata == 3
+        @test length(classes) == 10
+        # The groups of an isodiscriminantality class have the same homology.
+        for members in values(classes), group in members
+            @test expected[group]["trivial"] == expected[first(members)]["trivial"]
+            @test expected[group]["sign"] == expected[first(members)]["sign"]
         end
         @test expected["G37"]["real"] == "E8"
     end

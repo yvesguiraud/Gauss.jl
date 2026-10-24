@@ -1,96 +1,251 @@
-# Integral homology of the braid groups of the 26 well-generated exceptional complex
-# reflection groups W, with trivial coefficients: H₀, …, Hₙ for W of rank n.
+# Homology of the braid groups of the 34 exceptional complex reflection groups W: with
+# trivial coefficients (`trivial`) and with coefficients in the sign representation ℤε,
+# where the braid reflections act by −1 (`sign`), H₀ to Hₙ for W of rank n; sizes of the
+# Dehornoy–Lafont complexes of five well-generated groups.
 #
-# Provenance: the table of section 4.2 of the development plan, computed in the
-# experiment repository with the preliminary implementation (homologie.jl, dual monoids,
-# Gauss_a), and for G37 from the elementary divisors of d₀ to d₇ computed by
-# SparseElementaryDivisors. To be confronted with table 3 of O. Garnier
-# (arXiv:2302.10033, section 3.6) in J1.f, which will also add table 4 (coefficients ℤε).
+# Provenance: tables 1, 3 and 4 of the article of [source] (section 3), transcribed from
+# arXiv v2. Table 3 agrees with the values computed in J0 (homologie.jl, dual monoids,
+# Gauss_a) and in J1 by Gauss, except for H₄ of G32. Each key holds the value expected by
+# the tests; where it differs from the printed value, `errata` keeps the printed value,
+# with the key and degree concerned, whether the author's erratum lists it (`listed`) and
+# the reason.
 #
-# One table per group, named as the snapshots (G4, …, G37). `trivial` lists H₀ to Hₙ in
-# the notation read by parse(FinitelyGeneratedAbelianGroup, s); `real` names the Coxeter
-# type of the real groups, whose classical and dual monoids must give the same homology.
+# One table per group, in the order of the rows of tables 3 and 4, named as the snapshots
+# (G4, …, G37). Groups are read by parse(FinitelyGeneratedAbelianGroup, s) and written in
+# the form it displays. `well_generated = false` marks the 8 groups without a dual braid
+# monoid (Garside monoids given by a presentation in J4, Garside category of G31 in J7).
+# `real` names the Coxeter type of a real group; `isodiscriminantal` names the
+# representative of its isodiscriminantality class in the tables: the braid groups of a
+# class are isomorphic by an isomorphism sending braid reflections to braid reflections,
+# hence have the same homology for both modules.
+#
+# Table 1: `cells_mar17` (row [Mar17], Dehornoy–Lafont complex of Marin, reproduced by the
+# variant Gauss_d of J0) and `cells_optimised` (row "Optimized", order of section 2.2),
+# numbers of cells in degrees 0 to n; `two_cell_bounds`: the lower and upper bounds of
+# section 3.4 for the number of 2-cells of a Dehornoy–Lafont complex.
+
+[source]
+reference = "O. Garnier, Generalization of the Dehornoy–Lafont order complex to categories. Application to exceptional braid groups"
+journal = "Appl. Categ. Structures 32 (2024), no. 1, article 1"  # according to dblp, not checked
+arxiv = "2302.10033v2"
+tables = [1, 3, 4]
+erratum = "https://ogarnier.github.io/pub/erratum.pdf"
+erratum_version = "2026-08-25"  # date of the last update printed in the erratum (section 1)
 
 [G4]
+well_generated = true
+isodiscriminantal = "A2"
 trivial = ["ℤ", "ℤ", "0"]
+sign = ["ℤ/2ℤ", "ℤ/3ℤ", "0"]
 
 [G8]
+well_generated = true
+isodiscriminantal = "A2"
 trivial = ["ℤ", "ℤ", "0"]
+sign = ["ℤ/2ℤ", "ℤ/3ℤ", "0"]
 
 [G16]
+well_generated = true
+isodiscriminantal = "A2"
 trivial = ["ℤ", "ℤ", "0"]
-
-[G20]
-trivial = ["ℤ", "ℤ", "0"]
+sign = ["ℤ/2ℤ", "ℤ/3ℤ", "0"]
 
 [G5]
+well_generated = true
+isodiscriminantal = "I2(4)"
 trivial = ["ℤ", "ℤ²", "ℤ"]
-
-[G6]
-trivial = ["ℤ", "ℤ²", "ℤ"]
-
-[G9]
-trivial = ["ℤ", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/4ℤ", "0"]
 
 [G10]
+well_generated = true
+isodiscriminantal = "I2(4)"
 trivial = ["ℤ", "ℤ²", "ℤ"]
-
-[G14]
-trivial = ["ℤ", "ℤ²", "ℤ"]
-
-[G17]
-trivial = ["ℤ", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/4ℤ", "0"]
 
 [G18]
+well_generated = true
+isodiscriminantal = "I2(4)"
 trivial = ["ℤ", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/4ℤ", "0"]
+
+[G6]
+well_generated = true
+isodiscriminantal = "I2(6)"
+trivial = ["ℤ", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/6ℤ", "0"]
+
+[G9]
+well_generated = true
+isodiscriminantal = "I2(6)"
+trivial = ["ℤ", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/6ℤ", "0"]
+
+[G17]
+well_generated = true
+isodiscriminantal = "I2(6)"
+trivial = ["ℤ", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/6ℤ", "0"]
+
+[G7]
+well_generated = false
+isodiscriminantal = "G7"
+trivial = ["ℤ", "ℤ³", "ℤ²"]
+sign = ["ℤ/2ℤ", "(ℤ/2ℤ)²", "0"]
+
+[G11]
+well_generated = false
+isodiscriminantal = "G7"
+trivial = ["ℤ", "ℤ³", "ℤ²"]
+sign = ["ℤ/2ℤ", "(ℤ/2ℤ)²", "0"]
+
+[G19]
+well_generated = false
+isodiscriminantal = "G7"
+trivial = ["ℤ", "ℤ³", "ℤ²"]
+sign = ["ℤ/2ℤ", "(ℤ/2ℤ)²", "0"]
+
+[G12]
+well_generated = false
+trivial = ["ℤ", "ℤ", "0"]
+sign = ["ℤ/2ℤ", "ℤ/3ℤ", "0"]
+
+[G13]
+well_generated = false
+trivial = ["ℤ", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/2ℤ", "0"]
+
+[G14]
+well_generated = true
+isodiscriminantal = "I2(8)"
+trivial = ["ℤ", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/8ℤ", "0"]
+
+[G15]
+well_generated = false
+trivial = ["ℤ", "ℤ³", "ℤ²"]
+sign = ["ℤ/2ℤ", "(ℤ/2ℤ)²", "0"]
+
+[G20]
+well_generated = true
+isodiscriminantal = "I2(5)"
+trivial = ["ℤ", "ℤ", "0"]
+sign = ["ℤ/2ℤ", "ℤ/5ℤ", "0"]
 
 [G21]
+well_generated = true
+isodiscriminantal = "I2(10)"
 trivial = ["ℤ", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/10ℤ", "0"]
+
+[G22]
+well_generated = false
+trivial = ["ℤ", "ℤ", "0"]
+sign = ["ℤ/2ℤ", "0", "0"]
 
 [G23]
+well_generated = true
 real = "H3"
 trivial = ["ℤ", "ℤ", "ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ", "0"]
 
 [G24]
+well_generated = true
 trivial = ["ℤ", "ℤ", "ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ", "0"]
+cells_mar17 = [1, 14, 38, 25]
+cells_optimised = [1, 14, 38, 25]
+two_cell_bounds = [38, 40]
 
 [G25]
+well_generated = true
+isodiscriminantal = "A3"
 trivial = ["ℤ", "ℤ", "ℤ/2ℤ", "0"]
+sign = ["ℤ/2ℤ", "ℤ/3ℤ", "ℤ/2ℤ", "0"]
 
 [G26]
+well_generated = true
+isodiscriminantal = "B3"
 trivial = ["ℤ", "ℤ²", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/2ℤ", "ℤ/2ℤ", "0"]
 
 [G27]
+well_generated = true
 trivial = ["ℤ", "ℤ", "ℤ/3ℤ ⊕ ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ", "0"]
+cells_mar17 = [1, 20, 62, 43]
+cells_optimised = [1, 20, 60, 41]
+two_cell_bounds = [60, 65]
 
 [G28]
+well_generated = true
 real = "F4"
 trivial = ["ℤ", "ℤ²", "ℤ²", "ℤ²", "ℤ"]
+sign = ["ℤ/2ℤ", "ℤ/2ℤ", "ℤ/6ℤ", "ℤ/24ℤ", "0"]
 
 [G29]
+well_generated = true
 trivial = ["ℤ", "ℤ", "ℤ/2ℤ ⊕ ℤ/4ℤ", "ℤ/2ℤ ⊕ ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ ⊕ ℤ/4ℤ", "ℤ/2ℤ ⊕ ℤ/40ℤ", "0"]
+cells_mar17 = [1, 25, 127, 207, 104]
+cells_optimised = [1, 25, 125, 209, 108]
+two_cell_bounds = [120, 158]
+errata = [
+    { key = "cells_mar17", degree = 4, printed = "108", listed = true, reason = "listed in the erratum, section 1; Euler characteristic; Gauss_d of J0 gives 104" },
+]
 
 [G30]
+well_generated = true
 real = "H4"
 trivial = ["ℤ", "ℤ", "ℤ/2ℤ", "ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ", "ℤ/120ℤ", "0"]
+
+[G31]
+well_generated = false
+trivial = ["ℤ", "ℤ", "ℤ/6ℤ", "ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/6ℤ", "ℤ/20ℤ", "0"]
 
 [G32]
+well_generated = true
+isodiscriminantal = "A4"
 trivial = ["ℤ", "ℤ", "ℤ/2ℤ", "0", "0"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ", "ℤ/5ℤ", "0"]
+errata = [
+    { key = "trivial", degree = 4, printed = "ℤ", listed = true, reason = "listed in the erratum, section 1; Euler characteristic; J0 and Gauss" },
+]
 
 [G33]
+well_generated = true
 trivial = ["ℤ", "ℤ", "ℤ/6ℤ", "ℤ/6ℤ", "ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ", "ℤ/2ℤ", "ℤ/2ℤ", "0"]
+cells_mar17 = [1, 30, 226, 638, 740, 299]
+cells_optimised = [1, 30, 223, 616, 705, 283]
+two_cell_bounds = [213, 302]
 
 [G34]
+well_generated = true
 trivial = ["ℤ", "ℤ", "ℤ/6ℤ", "ℤ/6ℤ", "(ℤ/3ℤ)² ⊕ ℤ/6ℤ", "(ℤ/3ℤ)² ⊕ ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/6ℤ", "ℤ/2ℤ", "ℤ/6ℤ", "ℤ/252ℤ", "0"]
+cells_mar17 = [1, 56, 711, 3448, 7520, 7414, 2686]
+cells_optimised = [1, 56, 646, 2839, 5691, 5255, 1812]
+two_cell_bounds = [630, 1071]
 
 [G35]
+well_generated = true
 real = "E6"
 trivial = ["ℤ", "ℤ", "ℤ/2ℤ", "ℤ/2ℤ", "ℤ/6ℤ", "ℤ/3ℤ", "0"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ", "ℤ/2ℤ", "ℤ/2ℤ", "ℤ/9ℤ", "0"]
 
 [G36]
+well_generated = true
 real = "E7"
 trivial = ["ℤ", "ℤ", "ℤ/2ℤ", "(ℤ/2ℤ)²", "(ℤ/6ℤ)²", "ℤ/3ℤ ⊕ ℤ/6ℤ", "ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ", "(ℤ/2ℤ)²", "(ℤ/2ℤ)²", "ℤ/2ℤ", "ℤ/2ℤ", "0"]
+errata = [
+    { key = "sign", degree = 7, printed = "ℤ", listed = false, reason = "not in the erratum of 2026-08-25, to be reported to the author; Euler characteristic; Gauss in J1.e, both numberings" },
+]
 
 [G37]
+well_generated = true
 real = "E8"
 trivial = ["ℤ", "ℤ", "ℤ/2ℤ", "ℤ/2ℤ", "ℤ/2ℤ ⊕ ℤ/6ℤ", "ℤ/3ℤ ⊕ ℤ/6ℤ", "ℤ/2ℤ ⊕ ℤ/6ℤ", "ℤ", "ℤ"]
+sign = ["ℤ/2ℤ", "0", "ℤ/2ℤ", "ℤ/2ℤ", "(ℤ/2ℤ)²", "ℤ/2ℤ", "(ℤ/2ℤ)²", "ℤ/240ℤ", "0"]
